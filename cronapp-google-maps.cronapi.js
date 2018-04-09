@@ -2,7 +2,7 @@
   'use strict';
 
   /**
-   * @category CategoryType.MAPS
+   * @category Google Maps
    * @categoryTags Mapas|maps
    */
   this.cronapi.maps = {};
@@ -25,13 +25,12 @@
    * @nameTags map|init|iniciar|mapa|google
    * @description initMapDescription
    */
-  this.cronapi.maps.init = function(/** @type {ObjectType.OBJECT} @description {{createChartId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{type}} @blockType util_dropdown @keys roadmap|hybrid|satellite|terrain  @values roadmap|hybrid|satellite|terrain  */ type, /** @type {ObjectType.STRING} @description {{latitude}} */ latitude, /** @type {ObjectType.STRING} @description {{longitude}} */longitude, /** @type {ObjectType.STRING} @description {{zoom}} @blockType util_dropdown @keys 16|18|10  @values street|buildings|city  */ zoom, /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement ) {
+  this.cronapi.maps.init = function(/** @type {ObjectType.OBJECT} @description {{createChartId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{type}} @blockType util_dropdown @keys roadmap|hybrid|satellite|terrain  @values roadmap|hybrid|satellite|terrain  */ type, /** @type {ObjectType.OBJECT} @description {{centerPoint}} */ centerPoint,  /** @type {ObjectType.STRING} @description {{zoom}} @blockType util_dropdown @keys 16|18|10  @values street|buildings|city  */ zoom, /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement ) {
 
    $.getScript('https://maps.googleapis.com/maps/api/js?key='+$('#'+id).attr('token')+'&libraries=places,drawing', function() {
         document.getElementById(id)._map = null;
         var map = new google.maps.Map(document.getElementById(id), {     
-        center: {lat: Number.parseFloat(latitude),
-        lng: Number.parseFloat(longitude)}, 
+        center: centerPoint, 
         zoom: Number.parseInt(zoom),
         mapTypeId: type,
         mapTypeControl:false,
@@ -243,7 +242,10 @@
    * @returns {ObjectType.OBJECT}
    */
   this.cronapi.maps.createLatLngPoint = function(  /** @type {ObjectType.STRING} @description {{latitude}} */ latitude, /** @type {ObjectType.STRING} @description {{lontitude}} */ lontitude) {
-      return new google.maps.LatLng( latitude, lontitude )
+      if(window.google){
+      return new google.maps.LatLng( latitude, lontitude );
+      }else
+      return {'lat' : Number.parseFloat(latitude), 'lng' :Number.parseFloat(lontitude) };
   }
   
   /**
@@ -265,7 +267,6 @@
    * @returns {ObjectType.OBJECT}
    */
   this.cronapi.maps.getPropertyFromAutoComplete = function(/** @type {ObjectType.OBJECT} @description {{autoComplete}} */  autoComplete, /** @type {ObjectType.STRING} @description {{type}} @blockType util_dropdown @keys addressName|latitude|longitude  @values addressName|latitude|longitude  */ property  ) {
-     
       switch(property){
         
         case 'addressName':{
@@ -386,17 +387,19 @@
       var callback = function(arrayCallback, status){
       statement(arrayCallback,status);
       }
-      var geocoder = google.maps.Geocoder(request, callback);
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode(request, callback);
+      
   }
   
-    /**
+  /**
    * @type function
    * @name getPropertyFroGeocoder
    * @nameTags map|autoComplete|create|auto completar|google|completar|property|propriedade
    * @description createMarkerDescription
    * @returns {ObjectType.OBJECT}
    */
-  this.cronapi.maps.getPropertyFroGeocoder = function(/** @type {ObjectType.OBJECT} @description {{geocodeItem}} */  geocodeItem, /** @type {ObjectType.STRING} @description {{type}} @blockType util_dropdown @keys addressName|latitude|longitude  @values addressName|latitude|longitude  */ property  ) {
+  this.cronapi.maps.getPropertyFromGeocoder = function(/** @type {ObjectType.OBJECT} @description {{geocodeItem}} */  geocodeItem, /** @type {ObjectType.STRING} @description {{type}} @blockType util_dropdown @keys addressName|latitude|longitude|placeId  @values addressName|latitude|longitude|placeId  */ property  ) {
       switch(property){
         case 'addressName':{
           return geocodeItem.getPlace().formatted_address;
@@ -407,26 +410,29 @@
         case 'longitude':{
           return geocodeItem.geometry.location.lng();
         }
+        case 'placeId':{
+          return geocodeItem.place_id;
+        }
       }
   }
   
   
   /**
    * @type function
-   * @name direction
+   * @name directionRoute
    * @nameTags map|autoComplete|direction|google|completar|property|propriedade
    * @description createMarkerDescription
-   * @returns {ObjectType.OBJECT}
    */
-  this.cronapi.maps.direction = function(/** @type {ObjectType.OBJECT} @description {{directRequest}} */  directRequest, /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement   ) {
-     
+  this.cronapi.maps.directionRoute = function(/** @type {ObjectType.OBJECT} @description {{directRequest}} */  directRequest, /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement   ) {
+    var directionService = new google.maps.DirectionsService();
+    directionService.route(directRequest,statement);
      
   }
   
   
   /**
    * @type function
-   * @name direction
+   * @name createRequestDirection
    * @nameTags map|autoComplete|direction|google|completar|property|propriedade
    * @description createMarkerDescription
    * @returns {ObjectType.OBJECT}
@@ -434,13 +440,35 @@
   this.cronapi.maps.createRequestDirection = function(/** @type {ObjectType.OBJECT} @description {{originPoint}} */  originPoint, /** @type {ObjectType.OBJECT} @description {{destinationPoint}} */  destinationPoint, /** @type {ObjectType.OBJECT} @description {{travelMode}} @blockType util_dropdown @keys DRIVING|TRANSIT|WALKING|BICYCLING  @values DRIVING|TRANSIT|WALKING|BICYCLING  */  travelMode, /** @type {ObjectType.OBJECT} @description {{requestAdvancedOptions}} */  requestAdvancedOptions  ) {
      var request = {
        'origin': originPoint,
-       'destination' : originPoint,
+       'destination' : destinationPoint,
        'travelMode': travelMode
      };
      if(requestAdvancedOptions){
        request = $.extend(request,JSON.parse(requestAdvancedOptions));
      }
     return request; 
+  }
+  
+  
+    /**
+   * @type function
+   * @name renderDirection
+   * @nameTags map|autoComplete|direction|google|completar|property|propriedade
+   * @description createMarkerDescription
+   */
+  this.cronapi.maps.renderDirection = function(/** @type {ObjectType.OBJECT} @description {{createMapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.OBJECT} @description {{directionResultItem}} */  directionResultItem,  /** @type {ObjectType.OBJECT} @description {{requestAdvancedOptions}} */  requestAdvancedOptions , /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement   ) {
+   var map = document.getElementById(id)._map;
+     var request = {
+      'map' : map ,
+      'directions': directionResultItem,
+      'preserveViewport':true
+     };
+   if(requestAdvancedOptions){
+       request = $.extend(request,JSON.parse(requestAdvancedOptions));
+     }
+   var direcRendered = new google.maps.DirectionsRenderer(request);
+   statement(direcRendered);
+     
   }
 
 }).bind(window)();
