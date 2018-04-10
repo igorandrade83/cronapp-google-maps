@@ -1,0 +1,8 @@
+{
+  "copies": [
+    {
+      "from": "plugins/cronapp-google-maps/components/components-cronapp-google-maps.json",
+      "to": "/src/main/java/META-INF/"
+    }
+  ]
+}
