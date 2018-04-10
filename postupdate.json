@@ -4,5 +4,12 @@
       "from": "plugins/cronapp-google-maps/components/components-cronapp-google-maps.json",
       "to": "/src/main/java/META-INF/components-cronapp-google-maps.json"
     }
-  ]
+  ],
+    "includes": [
+    {
+      "file": "index.html",
+      "script": "plugins/cronapp-google-maps/components/cronapp-google-maps.cronapi.js",
+      "type": "script"
+    }
+	]
 }
