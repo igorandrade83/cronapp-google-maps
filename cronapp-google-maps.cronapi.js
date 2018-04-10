@@ -21,7 +21,7 @@
 
   /**
    * @type function
-   * @name initMap
+   * @name {{initMap}}
    * @nameTags map|init|iniciar|mapa|google
    * @description initMapDescription
    */

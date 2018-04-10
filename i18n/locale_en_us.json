@@ -1,3 +1,5 @@
 {
+	"isInitialized":"Is map initialized?"
+	"isInitializedDescription":"Boolean function that return if map is initialized"
 	"initMap":"Init Map"
 }
