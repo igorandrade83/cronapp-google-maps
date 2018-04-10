@@ -4,7 +4,7 @@
   "authors": [
     "Rodrigo Santos Reis"
   ],
-  "description": "API to use google mpas on CronApp",
+  "description": "Google maps API",
   "main": "google-maps-cronapi.js",
   "keywords": [
     "google",
