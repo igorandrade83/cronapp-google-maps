@@ -25,7 +25,7 @@
    * @nameTags map|init|iniciar|mapa|google
    * @description {{initMapDescription}}
    */
-  this.cronapi.maps.init = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{typeMap}} @blockType util_dropdown @keys roadmap|hybrid|satellite|terrain  @values roadmap|hybrid|satellite|terrain  */ type, /** @type {ObjectType.OBJECT} @description {{centerPoint}} */ centerPoint, /** @type {ObjectType.STRING} @description {{zoom}} @blockType util_dropdown @keys 16|18|10  @values street|buildings|city  */ zoom, /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement ) {
+  this.cronapi.maps.init = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{typeMap}} @blockType util_dropdown @keys roadmap|hybrid|satellite|terrain  @values {{roadmap}}|{{hybrid}}|{{satellite}}|{{terrain}}  */ type, /** @type {ObjectType.OBJECT} @description {{centerPoint}} */ centerPoint, /** @type {ObjectType.STRING} @description {{zoom}} @blockType util_dropdown @keys 16|18|10  @values {{street}}|{{buildings}}|{{city}}  */ zoom, /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement ) {
 
    $.getScript('https://maps.googleapis.com/maps/api/js?key='+$('#'+id).attr('token')+'&libraries=places,drawing', function() {
         document.getElementById(id)._map = null;
@@ -176,7 +176,7 @@
    * @nameTags map|mapa|zoom|google|editar
    * @description {{changeMapZoomDescription}}
    */
-  this.cronapi.maps.changeMapZoom = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{zoom}} @blockType util_dropdown @keys 16|18|10  @values street|buildings|city  */ zoom ) {
+  this.cronapi.maps.changeMapZoom = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{zoom}} @blockType util_dropdown @keys 16|18|10  @values {{street}}|{{buildings}}|{{city}}  */ zoom ) {
       var map = document.getElementById(id)._map;
       map.setZoom(Number.parseInt(zoom));
   }
@@ -188,7 +188,7 @@
    * @description {{getPropertyFromMarkerDescription}}
    * @returns {ObjectType.OBJECT}
    */
-  this.cronapi.maps.getPropertyFromMarker = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{markerId}}*/ markerId, /** @type {ObjectType.STRING} @description {{markerPropertyType}} @blockType util_dropdown @keys latitude|longitude|icon|title|infoWindow  @values latitude|longitude|icon|title|infoWindow  */ property ) {
+  this.cronapi.maps.getPropertyFromMarker = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{markerId}}*/ markerId, /** @type {ObjectType.STRING} @description {{markerPropertyType}} @blockType util_dropdown @keys latitude|longitude|icon|title|infoWindow  @values {{latitude}}|{{longitude}}|{{icon}}|{{title}}|{{infoWindow}}  */ property ) {
       var map = document.getElementById(id)._map;
       
       switch(property){
@@ -216,7 +216,7 @@
    * @nameTags map|autoComplete|create|auto completar|google|completar
    * @description {{createAutoCompleteDescription}}
    */
-  this.cronapi.maps.createAutoComplete = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{searchType}} @blockType util_dropdown @keys geocode|address|establishment  @values geocode|address|establishment  */ searchType , /** @type {ObjectType.STRING} @description {{searchBounds}} */ searchBounds, /** @type {ObjectType.STRING} @description {{isStrictSearch}} @blockType util_dropdown @keys true|false  @values true|false  */ isStrictSearch , /** @type {ObjectType.STRING} @description {{advancedOptions}} */ advancedOptions, /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement ) {
+  this.cronapi.maps.createAutoComplete = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{searchType}} @blockType util_dropdown @keys geocode|address|establishment  @values {{geocode}}|{{address}}|{{establishment}}  */ searchType , /** @type {ObjectType.STRING} @description {{searchBounds}} */ searchBounds, /** @type {ObjectType.STRING} @description {{isStrictSearch}} @blockType util_dropdown @keys true|false  @values {{true}}|{{false}}  */ isStrictSearch , /** @type {ObjectType.STRING} @description {{advancedOptions}} */ advancedOptions, /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement ) {
       var map = document.getElementById(map)._map;
       var autoComplete = new google.maps.places.Autocomplete(document.getElementById(id));
       autoComplete.setTypes([searchType]);
@@ -263,7 +263,7 @@
    * @description {{getPropertyFromAutoCompleteDescription}}
    * @returns {ObjectType.OBJECT}
    */
-  this.cronapi.maps.getPropertyFromAutoComplete = function( /** @type {ObjectType.OBJECT} @description {{autoComplete}} */  autoComplete, /** @type {ObjectType.STRING} @description {{addressPropertyType}} @blockType util_dropdown @keys addressName|latitude|longitude  @values addressName|latitude|longitude  */ Property  ) {
+  this.cronapi.maps.getPropertyFromAutoComplete = function( /** @type {ObjectType.OBJECT} @description {{autoComplete}} */  autoComplete, /** @type {ObjectType.STRING} @description {{addressPropertyType}} @blockType util_dropdown @keys addressName|latitude|longitude  @values {{address}}|{{latitude}}|{{longitude}}  */ Property  ) {
 
       switch(property){
         
@@ -395,19 +395,19 @@
    * @description {{getPropertyFromGeocoderDescription}}
    * @returns {ObjectType.OBJECT}
    */
-  this.cronapi.maps.getPropertyFromGeocoder = function( /** @type {ObjectType.OBJECT} @description {{geocodeItem}} */  geocoderItem, /** @type {ObjectType.STRING} @description {{placePropertyType}} @blockType util_dropdown @keys addressName|latitude|longitude|placeId  @values addressName|latitude|longitude|placeId  */ property  ) {
+  this.cronapi.maps.getPropertyFromGeocoder = function( /** @type {ObjectType.OBJECT} @description {{geocodeItem}} */  geocodeItem, /** @type {ObjectType.STRING} @description {{placePropertyType}} @blockType util_dropdown @keys addressName|latitude|longitude|placeId  @values {{address}}|{{latitude}}|{{longitude}}|{[placeId]}  */ property  ) {
       switch(property){
         case 'addressName':{
-          return geocoderItem.getPlace().formatted_address;
+          return geocodeItem.getPlace().formatted_address;
         }
         case 'latitude':{
-          return geocoderItem.geometry.location.lat();
+          return geocodeItem.geometry.location.lat();
         }
         case 'longitude':{
-          return geocoderItem.geometry.location.lng();
+          return geocodeItem.geometry.location.lng();
         }
         case 'placeId':{
-          return geocoderItem.place_id;
+          return geocodeItem.place_id;
         }
       }
   }
@@ -433,7 +433,7 @@
    * @description {{createRequestDirectionDescription}}
    * @returns {ObjectType.OBJECT}
    */
-  this.cronapi.maps.createRequestDirection = function( /** @type {ObjectType.OBJECT} @description {{originPoint}} */  originPoint, /** @type {ObjectType.OBJECT} @description {{destinationPoint}} */  destinationPoint, /** @type {ObjectType.OBJECT} @description {{travelMode}} @blockType util_dropdown @keys DRIVING|TRANSIT|WALKING|BICYCLING  @values DRIVING|TRANSIT|WALKING|BICYCLING  */  travelMode, /** @type {ObjectType.OBJECT} @description {{requestAdvancedOptions}} */  requestAdvancedOptions  ) {
+  this.cronapi.maps.createRequestDirection = function( /** @type {ObjectType.OBJECT} @description {{originPoint}} */  originPoint, /** @type {ObjectType.OBJECT} @description {{destinationPoint}} */  destinationPoint, /** @type {ObjectType.OBJECT} @description {{travelMode}} @blockType util_dropdown @keys DRIVING|TRANSIT|WALKING|BICYCLING  @values {{DRIVING}}|{{TRANSIT}}|{{WALKING}}|{{BICYCLING}}  */  travelMode, /** @type {ObjectType.OBJECT} @description {{requestAdvancedOptions}} */  requestAdvancedOptions  ) {
      var request = {
        'origin': originPoint,
        'destination' : destinationPoint,
@@ -445,12 +445,11 @@
     return request; 
   }
   
-  
     /**
    * @type function
-   * @name {{renderRouter}}
+   * @name {{drawRoute}}
    * @nameTags map|autoComplete|direction|google|completar|property|propriedade
-   * @description renderRouterDescription
+   * @description drawRouteDescription
    */
   this.cronapi.maps.drawRoute = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.OBJECT} @description {{directionResultItem}} */  directionResultItem, /** @type {ObjectType.OBJECT} @description {{requestAdvancedOptions}} */  requestAdvancedOptions , /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement   ) {
    var map = document.getElementById(id)._map;
