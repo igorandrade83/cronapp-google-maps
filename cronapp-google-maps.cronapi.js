@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-
+ 
   /**
    * @category Google Maps
    * @categoryTags Mapas|maps
