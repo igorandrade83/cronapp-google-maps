@@ -1,7 +1,8 @@
 {
   "isInitialized":"Map initialized?",
   "isInitializedDescription ":"Boolean function that returns if the map was initialized",
-  "mapId":"Map ID",
+  "Id":"Id",
+  "mapId":"Map Id",
   "initMap":"Initialize map",
   "initMapDescription ":"Function that initializes the map on the screen",
   "typeMap":"Map Type",
