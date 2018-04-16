@@ -1,7 +1,8 @@
 {
   "isInitialized":"Mapa inicializado?",
   "isInitializedDescription":"Função booleana que retorna se o mapa foi inicializado",
-  "mapId":"Id do mapa",
+  "Id":"Identificador do componente",
+  "mapId":"Identificador do mapa",
   "initMap":"Inicializa mapa",
   "initMapDescription":"Função que inicializa o mapa na tela",
   "typeMap":"Tipo de mapa",
