@@ -116,7 +116,7 @@
    * @nameTags map|marker|create|marcador|google
    * @description {{setAdvancedMapOptionsDescription}}
    */
-  this.cronapi.maps.setAdvancedMapOptions = function( /** @type {ObjectType.OBJECT} @description {{MapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{advancedOptions}} */ advancedOptions  ) {
+  this.cronapi.maps.setAdvancedMapOptions = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{advancedOptions}} */ advancedOptions  ) {
       if(advancedOptions){
         try{
           var map = document.getElementById(id)._map;
