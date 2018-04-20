@@ -116,7 +116,7 @@
    * @nameTags map|marker|create|marcador|google
    * @description {{setAdvancedMapOptionsDescription}}
    */
-  this.cronapi.maps.setAdvancedMapOptions = function( /** @type {ObjectType.OBJECT} @description {{MapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{advancedOptions}} */ advancedOptions  ) {
+  this.cronapi.maps.setAdvancedMapOptions = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{advancedOptions}} */ advancedOptions  ) {
       if(advancedOptions){
         try{
           var map = document.getElementById(id)._map;
@@ -188,26 +188,26 @@
    * @description {{getPropertyFromMarkerDescription}}
    * @returns {ObjectType.OBJECT}
    */
-  this.cronapi.maps.getPropertyFromMarker = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{markerId}}*/ markerId, /** @type {ObjectType.STRING} @description {{markerPropertyType}} @blockType util_dropdown @keys latitude|longitude|icon|title|infoWindow  @values {{latitude}}|{{longitude}}|{{icon}}|{{title}}|{{infoWindow}}  */ property ) {
-      var map = document.getElementById(id)._map;
-      
-      switch(property){
-        case 'latitude':{
-          return map.markers[markerId].getPosition().lat();
-        }
-        case 'longitude':{
-          return map.markers[markerId].getPosition().lng();
-        }
-        case 'icon':{
-          return map._map.markers[markerId].getIcon();
-        }
-        case 'title':{
-          return map.markers[markerId].getTitle();
-        }
-        case 'infoWindow':{
-          return map.markers[markerId].info;
-        }
+  this.cronapi.maps.getPropertyFromMarker = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{markerId}}*/ markerId, /** @type {ObjectType.STRING} @description {{markerPropertyType}} @blockType util_dropdown @keys latitude|longitude|icon|title|infoWindow  @values {{latitude}}|{{longitude}}|{{iconItem}}|{{titleItem}}|{{infoWindowItem}}  */ property ) {
+    var map = document.getElementById(id)._map;
+    
+    switch(property){
+      case 'latitude':{
+        return map.markers[markerId].getPosition().lat();
       }
+      case 'longitude':{
+        return map.markers[markerId].getPosition().lng();
+      }
+      case 'icon':{
+        return map._map.markers[markerId].getIcon();
+      }
+      case 'title':{
+        return map.markers[markerId].getTitle();
+      }
+      case 'infoWindow':{
+        return map.markers[markerId].info;
+      }
+    }
   }
   
   /**
@@ -395,7 +395,7 @@
    * @description {{getPropertyFromGeocoderDescription}}
    * @returns {ObjectType.OBJECT}
    */
-  this.cronapi.maps.getPropertyFromGeocoder = function( /** @type {ObjectType.OBJECT} @description {{geocodeItem}} */  geocodeItem, /** @type {ObjectType.STRING} @description {{placePropertyType}} @blockType util_dropdown @keys addressName|latitude|longitude|placeId  @values {{address}}|{{latitude}}|{{longitude}}|{[placeId]}  */ property  ) {
+  this.cronapi.maps.getPropertyFromGeocoder = function( /** @type {ObjectType.OBJECT} @description {{geocodeItem}} */  geocodeItem, /** @type {ObjectType.STRING} @description {{placePropertyType}} @blockType util_dropdown @keys addressName|latitude|longitude|placeId  @values {{address}}|{{latitude}}|{{longitude}}|{{placeId}}  */ property  ) {
       switch(property){
         case 'addressName':{
           return geocodeItem.getPlace().formatted_address;
