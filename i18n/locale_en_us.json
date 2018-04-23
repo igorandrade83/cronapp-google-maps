@@ -34,7 +34,7 @@
   "createAutoCompleteDescription":"Function that completes the typed address",
   "searchType":"Type of search: Limits searches based on the following features.<br/> <ul> <li><strong>Address</strong>: Defines address-based searches;</li> <li><strong>Establishment</strong>: Defines searches based on names of locations or establishments or</li> <li><strong>Geocoding</strong>: Defines searches based on geographic coordinates.</li> </ul>",
   "searchBounds":"Search bounds: Determines the search for a defined area.",
-  "isStrictSearch":"search Strict?: Defines whether the query will be restricted in the vicinity of a region.",
+  "isStrictSearch":"Search strict?: Defines whether the query will be restricted in the vicinity of a region.",
   "createLatLngPoint":"Create Coordinate",
   "createLatLngPointDescription":"Function that informs the latitude and longitude of a point",
   "createLatLngBounds":"Rectangle points",
