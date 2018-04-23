@@ -263,7 +263,7 @@
    * @description {{getPropertyFromAutoCompleteDescription}}
    * @returns {ObjectType.OBJECT}
    */
-  this.cronapi.maps.getPropertyFromAutoComplete = function( /** @type {ObjectType.OBJECT} @description {{autoComplete}} */  autoComplete, /** @type {ObjectType.STRING} @description {{addressPropertyType}} @blockType util_dropdown @keys addressName|latitude|longitude  @values {{address}}|{{latitude}}|{{longitude}}  */ Property  ) {
+  this.cronapi.maps.getPropertyFromAutoComplete = function( /** @type {ObjectType.OBJECT} @description {{autoComplete}} */  autoComplete, /** @type {ObjectType.STRING} @description {{addressPropertyType}} @blockType util_dropdown @keys addressName|latitude|longitude  @values {{address}}|{{latitude}}|{{longitude}}  */ property  ) {
 
       switch(property){
         
@@ -374,7 +374,7 @@
    * @nameTags map|create|geocoder|google|geocodificar
    * @description {{geocoderDescription}}
    */
-  this.cronapi.maps.geocoder = function( /** @type {ObjectType.OBJECT} @description {{requestAddress}} */ requestAddress, /** @type {ObjectType.OBJECT} @description {{requestBounds}} */ requetsBounds, /** @type {ObjectType.OBJECT} @description {{requestAdvancedOptions}} */ requestAdvancedOptions , /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement ) {
+  this.cronapi.maps.geocoder = function( /** @type {ObjectType.OBJECT} @description {{requestAddress}} */ requestAddress, /** @type {ObjectType.OBJECT} @description {{requestBounds}} */ requestBounds, /** @type {ObjectType.OBJECT} @description {{requestAdvancedOptions}} */ requestAdvancedOptions , /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement ) {
       var request= {
         'address': requestAddress,
         'bounds': requestBounds,
