@@ -398,7 +398,7 @@
   this.cronapi.maps.getPropertyFromGeocoder = function( /** @type {ObjectType.OBJECT} @description {{geocodeItem}} */  geocodeItem, /** @type {ObjectType.STRING} @description {{placePropertyType}} @blockType util_dropdown @keys addressName|latitude|longitude|placeId  @values {{address}}|{{latitude}}|{{longitude}}|{{placeId}}  */ property  ) {
       switch(property){
         case 'addressName':{
-          return geocodeItem.getPlace().formatted_address;
+          return geocodeItem.formatted_address;
         }
         case 'latitude':{
           return geocodeItem.geometry.location.lat();
