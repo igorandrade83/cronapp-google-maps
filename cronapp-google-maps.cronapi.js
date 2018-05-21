@@ -216,7 +216,7 @@
    * @nameTags map|autoComplete|create|auto completar|google|completar
    * @description {{createAutoCompleteDescription}}
    */
-  this.cronapi.maps.createAutoComplete = function( /** @type {ObjectType.OBJECT} @description {{mapId}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{searchType}} @blockType util_dropdown @keys geocode|address|establishment  @values {{geocode}}|{{address}}|{{establishment}}  */ searchType , /** @type {ObjectType.STRING} @description {{searchBounds}} */ searchBounds, /** @type {ObjectType.STRING} @description {{isStrictSearch}} @blockType util_dropdown @keys true|false  @values {{true}}|{{false}}  */ isStrictSearch , /** @type {ObjectType.STRING} @description {{advancedOptions}} */ advancedOptions, /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement ) {
+  this.cronapi.maps.createAutoComplete = function( /** @type {ObjectType.OBJECT} @description {{Id}} @blockType ids_from_screen*/ id, /** @type {ObjectType.STRING} @description {{searchType}} @blockType util_dropdown @keys geocode|address|establishment  @values {{geocode}}|{{address}}|{{establishment}}  */ searchType , /** @type {ObjectType.STRING} @description {{searchBounds}} */ searchBounds, /** @type {ObjectType.STRING} @description {{isStrictSearch}} @blockType util_dropdown @keys true|false  @values {{true}}|{{false}}  */ isStrictSearch , /** @type {ObjectType.STRING} @description {{advancedOptions}} */ advancedOptions, /** @type {ObjectType.STATEMENTSENDER} @description {{statement}} */ statement ) {
       var map = document.getElementById(id)._map;
       var autoComplete = new google.maps.places.Autocomplete(document.getElementById(id));
       autoComplete.setTypes([searchType]);
